@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chuyển đổi tiền tệ</title>
+</head>
+<body>
+<form>
+    Amount:<br>
+    <input type="number" name="amount" id="amount"><br>
+</form>
+<select name="money1" id="money1">
+    <option value="USD">USD</option>
+    <option value="VND">VND</option>
+</select>
+<select name="money2" id="money2">
+    <option value="USD">USD</option>
+    <option value="VND">VND</option>
+</select>
+<button type="button" onclick="chuyendoitien()" >Exchange</button>
+<p id="ketqua"></p>
+<script>
+    let amount = document.getElementById("amount");
+    let money1 = document.getElementById("money1");
+    let money2 = document.getElementById("money2");
+    let ketqua = document.getElementById("ketqua");
+    function chuyendoitien(){
+        if (money1.value === "USD" && money2.value === "VND"){
+            ketqua.innerText = amount.value * 25000 ;
+        }else if (money1.value === "VND" && money2.value === "USD"){
+            ketqua.innerText = amount.value / 25000 ;
+        }else{
+            ketqua.innerText = 'Khong can chuyen doi vi cung loai tien' ;
+        }
+    }
+</script>
+</body>
+</html>
