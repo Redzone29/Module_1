@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Độ tuổi học lớp 10</title>
+</head>
+<body>
+<form>
+    Nhập vào số tuổi:
+    <input type="number" id="age" name="age">
+    <button type="button" onclick="calculate()">Tính</button>
+    <p id="result"></p>
+</form>
+<script>
+    let age=document.getElementById('age');
+    function calculate(){
+        if(age.value >= 15){
+            document.getElementById('result').innerHTML="Bạn đủ tuổi để học lớp 10";
+        }else{
+            document.getElementById('result').innerHTML="Bạn không đủ tuổi để học lớp 10";
+        }
+    }
+</script>
+</body>
+</html>
