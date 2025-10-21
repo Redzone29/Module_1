@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhập vào hai số</title>
+</head>
+<body>
+
+<form>
+    Input a:
+    Input b:<br>
+    <input type="number" id="inputa" name="input">
+    <input type="number" id="inputb" name="input">
+</form>
+<button onclick="myFunction()">generate</button>
+<p id="ketqua"></p>
+<script>
+    let a=document.getElementById('inputa');
+    let b=document.getElementById('inputb');
+    let c= a%b
+    function myFunction() {
+        if (c.value == 0) {
+            document.getElementById('ketqua').innerHTML = "a chia het cho b";
+        }else{document.getElementById('ketqua').innerHTML = "a khong chia het cho b";}
+    }
+</script>
+</body>
+</html>
