@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xây Dựng và Vẽ Cây Nhị Phân</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .input-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .canvas-container {
+            padding: 30px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        canvas {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            max-width: 100%;
+        }
+
+        .results {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .traversal-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .traversal-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .traversal-value {
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .info-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🌳 Xây Dựng và Vẽ Cây Nhị Phân</h1>
+        <p>Từ phép duyệt Inorder và Preorder</p>
+    </div>
+
+    <div class="input-section">
+        <div class="input-group">
+            <label>Preorder (Tiền thứ tự):</label>
+            <input type="text" id="preorder" value="JCBADEFIGH" placeholder="Nhập hoặc để trống">
+        </div>
+        <div class="input-group">
+            <label>Inorder (Trung thứ tự):</label>
+            <input type="text" id="inorder" value="ABCEDFJIH" placeholder="Nhập hoặc để trống">
+        </div>
+        <div class="input-group">
+            <label>Postorder (Hậu thứ tự):</label>
+            <input type="text" id="postorder" value="" placeholder="Nhập hoặc để trống">
+        </div>
+        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+            <strong>💡 Lưu ý:</strong> Chỉ cần nhập 2 trong 3 phép duyệt:
+            <ul style="margin: 10px 0 0 20px;">
+                <li><strong>Preorder + Inorder</strong> → Xây dựng được cây ✓</li>
+                <li><strong>Postorder + Inorder</strong> → Xây dựng được cây ✓</li>
+                <li><strong>Preorder + Postorder</strong> → Không xây dựng được cây ✗ (cần Inorder)</li>
+            </ul>
+        </div>
+        <button class="btn" onclick="xayDungVaHienThi()">Xây Dựng Cây</button>
+    </div>
+
+    <div class="canvas-container">
+        <h2 style="color: #667eea; margin-bottom: 20px;">🎨 Hình Vẽ Cây Nhị Phân</h2>
+        <canvas id="treeCanvas" width="1200" height="600"></canvas>
+    </div>
+
+    <div class="results" id="results"></div>
+</div>
+
+<script>
+    class Node {
+        constructor(data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+            this.x = 0;
+            this.y = 0;
+        }
+    }
+
+    function xayDungCayTuPreIn(inorder, preorder) {
+        if (!inorder || !preorder || inorder.length === 0) {
+            return null;
+        }
+
+        const nutGoc = new Node(preorder[0]);
+        const viTriGoc = inorder.indexOf(preorder[0]);
+
+        const inorderTrai = inorder.substring(0, viTriGoc);
+        const inorderPhai = inorder.substring(viTriGoc + 1);
+
+        const soNutTrai = inorderTrai.length;
+        const preorderTrai = preorder.substring(1, 1 + soNutTrai);
+        const preorderPhai = preorder.substring(1 + soNutTrai);
+
+        nutGoc.left = xayDungCayTuPreIn(inorderTrai, preorderTrai);
+        nutGoc.right = xayDungCayTuPreIn(inorderPhai, preorderPhai);
+
+        return nutGoc;
+    }
+
+    function xayDungCayTuPostIn(inorder, postorder) {
+        if (!inorder || !postorder || inorder.length === 0) {
+            return null;
+        }
+
+        // Phần tử cuối trong postorder là nút gốc
+        const nutGoc = new Node(postorder[postorder.length - 1]);
+        const viTriGoc = inorder.indexOf(postorder[postorder.length - 1]);
+
+        const inorderTrai = inorder.substring(0, viTriGoc);
+        const inorderPhai = inorder.substring(viTriGoc + 1);
+
+        const soNutTrai = inorderTrai.length;
+        const postorderTrai = postorder.substring(0, soNutTrai);
+        const postorderPhai = postorder.substring(soNutTrai, postorder.length - 1);
+
+        nutGoc.left = xayDungCayTuPostIn(inorderTrai, postorderTrai);
+        nutGoc.right = xayDungCayTuPostIn(inorderPhai, postorderPhai);
+
+        return nutGoc;
+    }
+
+    function tinhChieuRongCay(nut) {
+        if (nut === null) return 0;
+        if (nut.left === null && nut.right === null) return 1;
+        return tinhChieuRongCay(nut.left) + tinhChieuRongCay(nut.right);
+    }
+
+    function ganToaDo(nut, x, y, khoangCach) {
+        if (nut === null) return;
+
+        nut.x = x;
+        nut.y = y;
+
+        const khoangCachMoi = khoangCach / 2;
+
+        if (nut.left) {
+            ganToaDo(nut.left, x - khoangCach, y + 80, khoangCachMoi);
+        }
+        if (nut.right) {
+            ganToaDo(nut.right, x + khoangCach, y + 80, khoangCachMoi);
+        }
+    }
+
+    function veNut(ctx, x, y, data, mauNen = '#667eea') {
+        // Vẽ vòng tròn
+        ctx.beginPath();
+        ctx.arc(x, y, 25, 0, 2 * Math.PI);
+        ctx.fillStyle = mauNen;
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Vẽ chữ
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 18px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(data, x, y);
+    }
+
+    function veCanh(ctx, x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = '#495057';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    function veCay(nut, ctx) {
+        if (nut === null) return;
+
+        // Vẽ cạnh trước
+        if (nut.left) {
+            veCanh(ctx, nut.x, nut.y + 25, nut.left.x, nut.left.y - 25);
+            veCay(nut.left, ctx);
+        }
+        if (nut.right) {
+            veCanh(ctx, nut.x, nut.y + 25, nut.right.x, nut.right.y - 25);
+            veCay(nut.right, ctx);
+        }
+
+        // Vẽ nút sau để nút nằm trên cạnh
+        const mauNen = nut.left === null && nut.right === null ? '#10b981' : '#667eea';
+        veNut(ctx, nut.x, nut.y, nut.data, mauNen);
+    }
+
+    function duyetPostorder(nut) {
+        if (nut === null) return [];
+        const ketQua = [];
+        ketQua.push(...duyetPostorder(nut.left));
+        ketQua.push(...duyetPostorder(nut.right));
+        ketQua.push(nut.data);
+        return ketQua;
+    }
+
+    function duyetPreorder(nut) {
+        if (nut === null) return [];
+        const ketQua = [];
+        ketQua.push(nut.data);
+        ketQua.push(...duyetPreorder(nut.left));
+        ketQua.push(...duyetPreorder(nut.right));
+        return ketQua;
+    }
+
+    function duyetInorder(nut) {
+        if (nut === null) return [];
+        const ketQua = [];
+        ketQua.push(...duyetInorder(nut.left));
+        ketQua.push(nut.data);
+        ketQua.push(...duyetInorder(nut.right));
+        return ketQua;
+    }
+
+    function duyetLevelorder(nutGoc) {
+        if (nutGoc === null) return [];
+        const ketQua = [];
+        const hangDoi = [nutGoc];
+
+        while (hangDoi.length > 0) {
+            const nutHienTai = hangDoi.shift();
+            ketQua.push(nutHienTai.data);
+
+            if (nutHienTai.left) hangDoi.push(nutHienTai.left);
+            if (nutHienTai.right) hangDoi.push(nutHienTai.right);
+        }
+        return ketQua;
+    }
+
+    function tinhChieuCao(nut) {
+        if (nut === null) return 0;
+        return 1 + Math.max(tinhChieuCao(nut.left), tinhChieuCao(nut.right));
+    }
+
+    function demNutLa(nut) {
+        if (nut === null) return 0;
+        if (nut.left === null && nut.right === null) return 1;
+        return demNutLa(nut.left) + demNutLa(nut.right);
+    }
+
+    function xayDungVaHienThi() {
+        const preorder = document.getElementById('preorder').value.trim().toUpperCase();
+        const inorder = document.getElementById('inorder').value.trim().toUpperCase();
+        const postorder = document.getElementById('postorder').value.trim().toUpperCase();
+
+        console.log('Preorder:', preorder);
+        console.log('Inorder:', inorder);
+        console.log('Postorder:', postorder);
+
+        let cay = null;
+        let phuongPhap = '';
+        let thongBaoLoi = '';
+
+        // Đếm số phương pháp được nhập
+        const soPhuongPhap = [preorder, inorder, postorder].filter(x => x && x.length > 0).length;
+
+        if (soPhuongPhap < 2) {
+            alert('❌ Vui lòng nhập ÍT NHẤT 2 trong 3 phép duyệt để xây dựng cây!');
+            return;
+        }
+
+        // Kiểm tra độ dài
+        const lengths = [preorder, inorder, postorder].filter(x => x && x.length > 0).map(x => x.length);
+        if (lengths.length > 1 && !lengths.every(l => l === lengths[0])) {
+            alert('❌ Các phép duyệt phải có cùng độ dài (cùng số nút)!\n\n' +
+                'Độ dài hiện tại:\n' +
+                (preorder ? `- Preorder: ${preorder.length}\n` : '') +
+                (inorder ? `- Inorder: ${inorder.length}\n` : '') +
+                (postorder ? `- Postorder: ${postorder.length}` : ''));
+            return;
+        }
+
+        // Xác định phương pháp xây dựng cây
+        if (preorder && preorder.length > 0 && inorder && inorder.length > 0) {
+            // Ưu tiên Preorder + Inorder
+            try {
+                cay = xayDungCayTuPreIn(inorder, preorder);
+                phuongPhap = '✓ Preorder + Inorder';
+
+                // Kiểm tra tính hợp lệ nếu có cả Postorder
+                if (postorder && postorder.length > 0) {
+                    const postorderTinhToan = duyetPostorder(cay).join('');
+                    if (postorderTinhToan !== postorder) {
+                        thongBaoLoi = '⚠️ Cảnh báo: Postorder bạn nhập không khớp với cây được xây dựng từ Preorder + Inorder. ' +
+                            `Postorder đúng phải là: ${postorderTinhToan}`;
+                    }
+                }
+            } catch (error) {
+                alert('❌ Lỗi xây dựng cây: ' + error.message);
+                return;
+            }
+        } else if (postorder && postorder.length > 0 && inorder && inorder.length > 0) {
+            // Xây dựng từ Postorder + Inorder
+            try {
+                cay = xayDungCayTuPostIn(inorder, postorder);
+                phuongPhap = '✓ Postorder + Inorder';
+            } catch (error) {
+                alert('❌ Lỗi xây dựng cây: ' + error.message);
+                return;
+            }
+        } else if (preorder && preorder.length > 0 && postorder && postorder.length > 0 && (!inorder || inorder.length === 0)) {
+            // Không thể xây dựng cây từ Preorder + Postorder mà không có Inorder
+            alert('❌ Không thể xây dựng cây chỉ từ Preorder + Postorder!\n\n' +
+                'Bạn cần thêm Inorder để xác định cấu trúc cây duy nhất.\n\n' +
+                'Lý do: Nhiều cây khác nhau có thể có cùng Preorder và Postorder.');
+            return;
+        } else {
+            alert('❌ Vui lòng nhập một trong các tổ hợp:\n' +
+                '• Preorder + Inorder\n' +
+                '• Postorder + Inorder\n' +
+                '• Cả 3 (để kiểm tra tính hợp lệ)');
+            return;
+        }
+
+        // Tính toán khoảng cách dựa trên chiều rộng cây
+        const chieuRong = tinhChieuRongCay(cay);
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Xóa canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Gán tọa độ cho các nút
+        const khoangCachBanDau = Math.min(200, canvas.width / (chieuRong + 1));
+        ganToaDo(cay, canvas.width / 2, 50, khoangCachBanDau);
+
+        // Vẽ cây
+        veCay(cay, ctx);
+
+        // Hiển thị thông tin
+        const postorderKetQua = duyetPostorder(cay).join('');
+        const preorderKetQua = duyetPreorder(cay).join('');
+        const inorderKetQua = duyetInorder(cay).join('');
+        const levelorder = duyetLevelorder(cay).join('');
+        const chieuCao = tinhChieuCao(cay);
+        const soNutLa = demNutLa(cay);
+        const soNutNoiBo = preorderKetQua.length - soNutLa;
+
+        const canhBaoHTML = thongBaoLoi ? `
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 15px;">
+                    ${thongBaoLoi}
+                </div>
+            ` : '';
+
+        const resultsHTML = `
+                <div class="section">
+                    <h2>🔄 Các Phép Duyệt Cây</h2>
+                    <div style="background: #d4edda; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745; margin-bottom: 15px;">
+                        <strong>${phuongPhap}</strong>
+                    </div>
+                    ${canhBaoHTML}
+                    <div class="traversal-item">
+                        <span class="traversal-label">Preorder (Tiền thứ tự):</span>
+                        <span class="traversal-value">${preorderKetQua}</span>
+                    </div>
+                    <div class="traversal-item">
+                        <span class="traversal-label">Inorder (Trung thứ tự):</span>
+                        <span class="traversal-value">${inorderKetQua}</span>
+                    </div>
+                    <div class="traversal-item">
+                        <span class="traversal-label">Postorder (Hậu thứ tự):</span>
+                        <span class="traversal-value">${postorderKetQua}</span>
+                    </div>
+                    <div class="traversal-item">
+                        <span class="traversal-label">Levelorder (Theo mức):</span>
+                        <span class="traversal-value">${levelorder}</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📈 Thông Tin Cây</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="value">${preorderKetQua.length}</div>
+                            <div class="label">Tổng số nút</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value">${chieuCao}</div>
+                            <div class="label">Chiều cao cây</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value">${soNutLa}</div>
+                            <div class="label">Số nút lá</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value">${soNutNoiBo}</div>
+                            <div class="label">Số nút nội bộ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <p style="text-align: center; color: #6c757d; font-style: italic;">
+                        💡 Nút màu xanh lá là nút lá (không có con), nút màu tím là nút nội bộ
+                    </p>
+                </div>
+            `;
+
+        document.getElementById('results').innerHTML = resultsHTML;
+    }
+
+    // Tự động xây dựng cây khi tải trang
+    window.onload = function() {
+        xayDungVaHienThi();
+    };
+</script>
+</body>
+</html>
