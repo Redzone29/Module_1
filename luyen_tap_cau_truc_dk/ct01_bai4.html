@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm min max</title>
+</head>
+<body>
+<form>
+    <fieldset>
+        Nhập vào 3 chữ số:<br>
+        <input type="number" id="inputa" name="input">
+        <input type="number" id="inputb" name="input">
+        <input type="number" id="inputc" name="input"><br><br>
+        <button type="button" onclick="tim()">Submit</button>
+        <p id="ketqua1"></p>
+        <p id="ketqua2"></p>
+    </fieldset>
+</form>
+<script>
+    let a = document.getElementById("inputa");
+    let b = document.getElementById("inputb");
+    let c = document.getElementById("inputc");
+
+    function tim() {
+        // Chuyển giá trị sang số
+        let numA = Number(a.value);
+        let numB = Number(b.value);
+        let numC = Number(c.value);
+
+        var d, e;
+
+        if (numA > numB && numB > numC) {
+            d = numA;
+            e = numC;
+        } else if (numB > numA && numA > numC) {
+            d = numB;
+            e = numC;
+        } else if (numC > numA && numA > numB) {
+            d = numC;
+            e = numB;
+        } else if (numC > numB && numB > numA) {
+            d = numC;
+            e = numA;
+        } else if (numA > numC && numC > numB) {
+            d = numA;
+            e = numB;
+        } else if (numB > numC && numC > numA) {
+            d = numB;
+            e = numA;
+        }
+
+        document.getElementById("ketqua1").innerHTML = "Max là: " + d;
+        document.getElementById("ketqua2").innerHTML = "Min là: " + e;
+    }
+</script>
+</body>
+</html>
