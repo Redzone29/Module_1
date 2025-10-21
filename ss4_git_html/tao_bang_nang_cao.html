@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bàn Cờ Vua</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #eee;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: 50px repeat(8, 60px);
+            grid-template-rows: 50px repeat(8, 60px);
+            background: orange;
+            padding: 10px;
+            gap: 0;
+            border: 5px solid orange;
+        }
+
+        /* Ô trống để góc trên trái */
+        .corner {
+            background: orange;
+        }
+
+        /* Hàng số (1–8) */
+        .number {
+            background: orange;
+            text-align: center;
+            font-weight: bold;
+            line-height: 50px;
+            font-size: 18px;
+        }
+
+        /* Cột chữ (A–H) */
+        .letter {
+            background: orange;
+            text-align: center;
+            font-weight: bold;
+            line-height: 60px;
+            font-size: 18px;
+        }
+
+        /* Các ô cờ trắng và đen */
+        .square {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Tô màu xen kẽ */
+        .square.white {
+            background: white;
+        }
+        .square.black {
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<div class="board">
+    <!-- Hàng đầu tiên (số 1–8) -->
+    <div class="corner"></div>
+    <div class="number">1</div>
+    <div class="number">2</div>
+    <div class="number">3</div>
+    <div class="number">4</div>
+    <div class="number">5</div>
+    <div class="number">6</div>
+    <div class="number">7</div>
+    <div class="number">8</div>
+
+    <!-- 8 hàng A–H -->
+    <!-- Hàng A -->
+    <div class="letter">A</div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+
+    <!-- Hàng B -->
+    <div class="letter">B</div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+
+    <!-- Hàng C -->
+    <div class="letter">C</div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+
+    <!-- Hàng D -->
+    <div class="letter">D</div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+
+    <!-- Hàng E -->
+    <div class="letter">E</div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+
+    <!-- Hàng F -->
+    <div class="letter">F</div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+
+    <!-- Hàng G -->
+    <div class="letter">G</div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+
+    <!-- Hàng H -->
+    <div class="letter">H</div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+    <div class="square black"></div>
+    <div class="square white"></div>
+</div>
+</body>
+</html>
