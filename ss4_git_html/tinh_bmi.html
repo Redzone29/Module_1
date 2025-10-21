@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính chỉ số cơ thể BMI</title>
+</head>
+<body>
+<form>
+    Nhập vào chỉ số cơ thể
+    Cân Nặng:<br>
+    <input type="text" id="weight"><br>
+    Chiều Cao:<br>
+    <input type="text" id="height"><br>
+    <button type="button" onclick="getWeight()" >Generate</button>
+    <p id="ketqua"></p>
+</form>
+<script>
+    let weight=document.getElementById('weight');
+    let height=document.getElementById('height');
+    let ketqua =document.getElementById('ketqua');
+    ketqua = weight.value / (height.value * height.value);
+    function getWeight(){
+        if(ketqua.value < 18.5){
+            document.write('underweight');
+        }else if(ketqua.value >= 18.5 && ketqua.value <= 20.0){
+            document.write('normal');
+        }else if(ketqua.value >= 25.0 && ketqua.value <= 30.0){
+            document.write('overweight');
+        }else {
+            document.write('obese');
+        }
+    }
+</script>
+</body>
+</html>
