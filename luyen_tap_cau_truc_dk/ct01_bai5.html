@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>student grade</title>
+</head>
+<body>
+<form>
+    input the student score <br>
+    assignment <br>
+    <input type="number" name="score" id="score1"><br>
+    progress test <br>
+    <input type="number" name="score" id="score2"><br>
+    final <br>
+    <input type="number" name="score" id="score3"><br>
+    <button type="button" onclick="myFunction()">submit</button>
+    <p id="result"></p>
+<script>
+    function myFunction() {
+        let score1 = parseFloat(document.getElementById("score1").value);
+        let score2 = parseFloat(document.getElementById("score2").value);
+        let score3 = parseFloat(document.getElementById("score3").value);
+        let grade="";
+
+        let average = (score1 + score2 * 2 + score3 * 3)/6;
+        average=Math.round(average*100)/100;
+        if(average >= 9){
+            grade = "Xuất sắc";
+        }else if(average >= 8){
+            grade = "Giỏi";
+        }else if(average >= 6){
+            grade = "Khá";
+        }else if(average >= 5){
+            grade = "Trung bình";
+        }else if(average >= 3){
+            grade = "Very Low";
+        }
+        document.getElementById("result").innerHTML="Điểm trung bình: "+ average + "<br>Xếp Loại: " + grade;
+    }
+</script>
+</form>
+</body>
+</html>
