@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counting percent that you got</title>
+</head>
+<body>
+<h1>Counting money percent that you got when selling product</h1>
+<br>
+<form>
+    The price of the product <br>
+    <input type="number" id="money1"><br>
+    Number of the product <br>
+    <input type="number" id="money2"> <br>
+    <button type="button" onclick="counting()">submit</button>
+    <p id="ketqua"></p>
+</form>
+<script>
+    function counting() {
+        let money1= parseInt(document.getElementById("money1").value);
+        let money2= parseInt(document.getElementById("money2").value);
+        let money3;
+
+        if (money2>100){
+            money3= money1*money2*20/100; //so hoa hong nhan duoc khi ban tren 100 sp la 20%
+        }else if(money2>60){
+            money3= money1*money2*15/100;//so hoa hong nhan duoc khi ban tren 60 sp la 15%
+        }else if(money2>30){
+            money3= money1*money2*10/100;//so hoa hong nhan duoc khi ban tren 30 sp la 10%
+        }else{
+            money3= money1*money2*5/100;//so hoa hong nhan duoc khi ban duoi 30 sp la 5%
+        }
+        document.getElementById("ketqua").innerText= "so hoa hong ban nhan duoc la: " + money3.toLocaleString() + " VND";
+
+    }
+</script>
+</body>
+</html>
