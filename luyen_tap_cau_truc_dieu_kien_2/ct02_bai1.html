@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exchange Celsius to Fahrenheit</title>
+</head>
+<body>
+<h1>Exchange Celsius to Fahrenheit</h1>
+<form>
+    <fieldset>
+        <legend>Degree</legend>
+        Degree:<br>
+        <select id="degree1" name="degree1">
+            <option value="Celsius">Celsius</option>
+            <option value="Fahrenheit">Fahrenheit</option>
+        </select>
+        <input type="number" id="num1" name="num1" step="0.01"><br><br>
+        <button type="button" onclick="calculate()">Calculate</button>
+        <p id="result"></p>
+    </fieldset>
+</form>
+<script>
+    function calculate() {
+        let num1 = parseFloat(document.getElementById("num1").value);
+        let degree1 = document.getElementById("degree1").value;
+        let num3;
+
+        // Kiểm tra dữ liệu hợp lệ
+        if (isNaN(num1)) {
+            document.getElementById("result").innerHTML = "Please enter a valid number!";
+            return;
+        }
+
+        if (degree1 === "Celsius") {
+            num3 = (num1 * 9 / 5) + 32;
+            document.getElementById("result").innerHTML = num1 + "°C = " + num3.toFixed(2) + "°F";
+        } else if (degree1 === "Fahrenheit") {
+            num3 = (num1 - 32) * 5 / 9;
+            document.getElementById("result").innerHTML = num1 + "°F = " + num3.toFixed(2) + "°C";
+        }
+    }
+</script>
+</body>
+</html>
