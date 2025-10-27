@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Right triangle area</title>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Right triangle area</legend>
+        Input the 1st Edge Length:
+        <input type="number" id="length1" name="length1"><br>
+        Input the 2nd Edge Length:
+        <input type="number" id="length2" name="length2"><br><br>
+        <button type="button" onclick="generate()">Generate</button>
+        <p id="result"></p>
+    </fieldset>
+</form>
+<script>
+    function generate(){
+        let length1 = parseFloat(document.getElementById("length1").value);
+        let length2 = parseFloat(document.getElementById("length2").value);
+        let area = (length1 * length2) / 2;
+
+        if(isNaN(length1) || isNaN(length2)){
+            result = document.getElementById("result").innerHTML="Please enter an integer or a Decimal";
+        }else if(length1 < 0 || length2 < 0){
+            result = document.getElementById("result").innerHTML="Please enter an integer or a Decimal";
+        }else {
+            result = document.getElementById("result").innerHTML="The Right Triangle Area Is: "+ area.toFixed(2);
+        }
+    }
+</script>
+
+</body>
+</html>
