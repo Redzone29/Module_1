@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính diện tích hin vuông</title>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>tính diện tích hình vuông</legend>
+        input Edge Length:
+        <input type="number" name="Edge Length" id="EdgeLength">
+        <button type="button" onclick="square()">generate</button>
+        <p id="Result"></p>
+<script>
+    function square() {
+        length= document.getElementById("EdgeLength").value;
+        area= length * length;
+       if(length < 0){
+           Result = document.getElementById("Result").innerHTML= "Please enter an integer or a decimal";
+       }else{
+           Result = document.getElementById("Result").innerHTML= "The square area is: "+ area;
+       }
+    }
+</script>
+        
+    </fieldset>
+</form>
+
+</body>
+</html>
