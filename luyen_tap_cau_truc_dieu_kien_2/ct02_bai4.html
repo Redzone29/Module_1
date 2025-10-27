@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rectangle area</title>
+</head>
+<body>
+<fieldset>
+    <legend>Rectangle area</legend>
+    Input the rectangle length:
+    <input type="number" id="RectangleLength" name="RectangleLength"><br>
+    Input the rectangle width:
+    <input type="number" id="RectangleWidth" name="RectangleWidth"><br><br>
+    <button type="button" onclick="Rectanglearea()">Generate</button>
+    <p id="result"></p>
+
+</fieldset>
+<script>
+    function Rectanglearea(){
+        let length = parseFloat(document.getElementById("RectangleLength").value);
+        let width = parseFloat(document.getElementById("RectangleWidth").value);
+        let area = length * width;
+
+        if(isNaN(length) || isNaN(width)){
+            result =document.getElementById("result").innerHTML="Please input an integer or a decimal number" ;
+        }else if(length < 0 || width < 0){
+            result =document.getElementById("result").innerHTML="Please input an integer or a decimal number" ;
+        }else{
+            result =document.getElementById("result").innerHTML="The Rectangle area is: "+ area.toFixed(2);
+        }
+    }
+</script>
+</body>
+</html>
