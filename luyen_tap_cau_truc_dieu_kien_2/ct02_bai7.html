@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solving the equation</title>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Solving the equation ax^2+bx+c=0</legend>
+        input a:
+        <input type="number" id="a" name="a">
+        <br>
+        input b:
+        <input type="number" id="b" name="b">
+        <br>
+        input c:
+        <input type="number" id="c" name="c">
+        <br>
+        <button type="button" onclick="generate()">generate</button>
+        <p id="result"></p>
+    </fieldset>
+</form>
+<script>
+    function generate() {
+        let a = parseFloat(document.getElementById("a").value);
+        let b = parseFloat(document.getElementById("b").value);
+        let c = parseFloat(document.getElementById("c").value);
+        let d = b * b - 4 * a * c;
+        if(isNaN(a)||isNaN(b)) {
+            result = document.getElementById("result").innerHTML= "Plz enter a number";
+        }else if (d < 0) {
+            result = document.getElementById("result").innerHTML = "There are no solution of equation";
+        }else if (d === 0) {
+            let x = - b / (2 * a);
+            result = document.getElementById("result").innerHTML = "The solution of equation is: " + x;
+        }else{
+            let x1 =  (- b + Math.sqrt(d))/ (2 *a);
+            let x2 =  (- b - Math.sqrt(d))/ (2 *a);
+            result = document.getElementById("result").innerHTML = "The solution of this equation is: x1= " + x1 + " x2 = " + x2;
+
+        }
+    }
+</script>
+</body>
+</html>
