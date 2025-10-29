@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính Lãi Ngân Hàng (Lãi Kép)</title>
+</head>
+<body>
+<h1>Tính Lãi Ngân Hàng</h1>
+
+<form>
+    <fieldset>
+        <legend>Thông Tin Gửi Tiền</legend>
+        Số tiền ban đầu (triệu đồng):
+        <input type="number" id="tien" step="0.1" min="0"><br><br>
+
+        Số tháng gửi:
+        <input type="number" id="thang" step="1" min="1"><br><br>
+
+        Lãi suất hàng tháng (%):
+        <input type="number" id="lai" step="0.01" min="0"><br><br>
+
+        <button type="button" onclick="tinhLai()">Tính Lãi</button>
+    </fieldset>
+</form>
+
+<div id="result"></div>
+
+<script>
+    function tinhLai() {
+        let tien = parseFloat(document.getElementById("tien").value);
+        let thang = parseFloat(document.getElementById("thang").value);
+        let lai = parseFloat(document.getElementById("lai").value);
+        let resultDiv = document.getElementById("result");
+
+        if (isNaN(tien) || isNaN(thang) || isNaN(lai) || tien <= 0 || thang <= 0 || lai < 0) {
+            resultDiv.innerHTML = "<b>Vui lòng nhập dữ liệu hợp lệ!</b>";
+            return;
+        }
+
+        // Tính lãi mẹ đẻ lãi con (lãi kép)
+        let tongTien = tien;
+
+        if (thang == 1) {
+            tongTien = tien * (1 + lai / 100);
+        } else if (thang == 2) {
+            tongTien = tien * (1 + lai / 100) * (1 + lai / 100);
+        } else if (thang == 3) {
+            tongTien = tien * (1 + lai / 100) * (1 + lai / 100) * (1 + lai / 100);
+        } else if (thang == 4) {
+            tongTien = tien * Math.pow(1 + lai / 100, 4);
+        } else if (thang == 5) {
+            tongTien = tien * Math.pow(1 + lai / 100, 5);
+        } else {
+            // Trường hợp tổng quát (>=6 tháng)
+            tongTien = tien * Math.pow(1 + lai / 100, thang);
+        }
+
+        let tienLai = tongTien - tien;
+
+        resultDiv.innerHTML =
+            `<h3>Kết quả sau ${thang} tháng:</h3>` +
+            `<p>Tiền lãi: <b>${tienLai.toFixed(2)} triệu đồng</b></p>` +
+            `<p>Tổng tiền nhận được: <b>${tongTien.toFixed(2)} triệu đồng</b></p>`;
+    }
+</script>
+</body>
+</html>
