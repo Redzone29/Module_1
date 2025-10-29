@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check if that is valid age</title>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Check if that is valid age</legend>
+        input your age: <br>
+        <input type="number" id="age" name="age">
+        <button type="button" onclick="checkAge()">Check Age</button>
+        <p id="result"></p>
+    </fieldset>
+</form>
+<script>
+    function checkAge() {
+        let age = document.getElementById("age").value;
+        if(isNaN(age)){
+            result = document.getElementById("result").innerHTML= "plz enter the number";
+
+        }else if(age <0 || age >120){
+            result = document.getElementById("result").innerHTML= "You are not a human";
+        }else{
+            result = document.getElementById("result").innerHTML= "Your age is valid";
+        }
+    }
+</script>
+</body>
+</html>
