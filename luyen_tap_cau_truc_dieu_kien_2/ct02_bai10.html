@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính Tiền Điện</title>
+</head>
+<body>
+<h1>Máy Tính Tiền Điện</h1>
+
+<h3>Bảng giá điện sinh hoạt theo bậc thang (EVN)</h3>
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>Bậc</th>
+        <th>Số kWh</th>
+        <th>Giá (đồng/kWh)</th>
+    </tr>
+    <tr>
+        <td>Bậc 1</td>
+        <td>0 - 50 kWh</td>
+        <td>1.893</td>
+    </tr>
+    <tr>
+        <td>Bậc 2</td>
+        <td>51 - 100 kWh</td>
+        <td>1.956</td>
+    </tr>
+    <tr>
+        <td>Bậc 3</td>
+        <td>101 - 200 kWh</td>
+        <td>2.271</td>
+    </tr>
+    <tr>
+        <td>Bậc 4</td>
+        <td>201 - 300 kWh</td>
+        <td>2.860</td>
+    </tr>
+    <tr>
+        <td>Bậc 5</td>
+        <td>301 - 400 kWh</td>
+        <td>3.197</td>
+    </tr>
+    <tr>
+        <td>Bậc 6</td>
+        <td>Từ 401 kWh</td>
+        <td>3.302</td>
+    </tr>
+</table>
+
+<br>
+<form>
+    <fieldset>
+        <legend>Tính Tiền Điện</legend>
+        Nhập số điện tiêu thụ (kWh):
+        <input type="number" id="kwh" step="0.01" min="0"><br><br>
+        <button type="button" onclick="calculate()">Tính Tiền</button>
+    </fieldset>
+</form>
+
+<div id="result"></div>
+
+<script>
+    function calculate() {
+        let kwh = parseFloat(document.getElementById('kwh').value);
+        let resultDiv = document.getElementById('result');
+
+        if (isNaN(kwh) || kwh <= 0) {
+            resultDiv.innerHTML = '<p><b>Vui lòng nhập số kWh hợp lệ (lớn hơn 0)</b></p>';
+        } else if (kwh <= 50) {
+            // Bậc 1: 0-50 kWh
+            let tien = kwh * 1893;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: ' + kwh + ' kWh × 1.893 đ = <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+
+        } else if (kwh <= 100) {
+            // Bậc 1 + Bậc 2
+            let bac1 = 50 * 1893;
+            let bac2 = (kwh - 50) * 1956;
+            let tien = bac1 + bac2;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: 50 kWh × 1.893 đ = <b>' + bac1.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 2: ' + (kwh - 50) + ' kWh × 1.956 đ = <b>' + bac2.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+
+        } else if (kwh <= 200) {
+            // Bậc 1 + 2 + 3
+            let bac1 = 50 * 1893;
+            let bac2 = 50 * 1956;
+            let bac3 = (kwh - 100) * 2271;
+            let tien = bac1 + bac2 + bac3;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: 50 kWh × 1.893 đ = <b>' + bac1.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 2: 50 kWh × 1.956 đ = <b>' + bac2.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 3: ' + (kwh - 100) + ' kWh × 2.271 đ = <b>' + bac3.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+
+        } else if (kwh <= 300) {
+            // Bậc 1 + 2 + 3 + 4
+            let bac1 = 50 * 1893;
+            let bac2 = 50 * 1956;
+            let bac3 = 100 * 2271;
+            let bac4 = (kwh - 200) * 2860;
+            let tien = bac1 + bac2 + bac3 + bac4;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: 50 kWh × 1.893 đ = <b>' + bac1.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 2: 50 kWh × 1.956 đ = <b>' + bac2.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 3: 100 kWh × 2.271 đ = <b>' + bac3.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 4: ' + (kwh - 200) + ' kWh × 2.860 đ = <b>' + bac4.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+
+        } else if (kwh <= 400) {
+            // Bậc 1 + 2 + 3 + 4 + 5
+            let bac1 = 50 * 1893;
+            let bac2 = 50 * 1956;
+            let bac3 = 100 * 2271;
+            let bac4 = 100 * 2860;
+            let bac5 = (kwh - 300) * 3197;
+            let tien = bac1 + bac2 + bac3 + bac4 + bac5;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: 50 kWh × 1.893 đ = <b>' + bac1.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 2: 50 kWh × 1.956 đ = <b>' + bac2.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 3: 100 kWh × 2.271 đ = <b>' + bac3.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 4: 100 kWh × 2.860 đ = <b>' + bac4.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 5: ' + (kwh - 300) + ' kWh × 3.197 đ = <b>' + bac5.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+
+        } else {
+            // Bậc 1 + 2 + 3 + 4 + 5 + 6 (trên 400 kWh)
+            let bac1 = 50 * 1893;
+            let bac2 = 50 * 1956;
+            let bac3 = 100 * 2271;
+            let bac4 = 100 * 2860;
+            let bac5 = 100 * 3197;
+            let bac6 = (kwh - 400) * 3302;
+            let tien = bac1 + bac2 + bac3 + bac4 + bac5 + bac6;
+            let vat = tien * 0.08;
+            let tongTien = tien + vat;
+
+            resultDiv.innerHTML = '<h3>Chi Tiết Tính Tiền:</h3>' +
+                '<p>Bậc 1: 50 kWh × 1.893 đ = <b>' + bac1.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 2: 50 kWh × 1.956 đ = <b>' + bac2.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 3: 100 kWh × 2.271 đ = <b>' + bac3.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 4: 100 kWh × 2.860 đ = <b>' + bac4.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 5: 100 kWh × 3.197 đ = <b>' + bac5.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Bậc 6: ' + (kwh - 400) + ' kWh × 3.302 đ = <b>' + bac6.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<hr>' +
+                '<p>Tổng tiền điện: <b>' + tien.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<p>Thuế VAT (8%): <b>' + vat.toLocaleString('vi-VN') + ' đ</b></p>' +
+                '<h2>TỔNG CỘNG: ' + Math.round(tongTien).toLocaleString('vi-VN') + ' đồng</h2>';
+        }
+    }
+</script>
+</body>
+</html>
