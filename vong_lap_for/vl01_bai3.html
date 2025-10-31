@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The fibonacci</title>
+</head>
+<body>
+<script>
+
+    number = parseInt(prompt("input times of fibonacci number: "));
+    var a = 0;
+    var b = 1;
+    var fibo = a + b;
+    document.writeln(a + "<br>");
+    document.writeln(b + "<br>");
+    document.writeln(fibo + "<br>");
+    for(let i = 0; i < number -3; i++){
+        var a = b;
+        var b = fibo;
+        var fibo = a + b;
+        document.writeln(fibo + "<br>");
+    }
+</script>
+</body>
+</html>
