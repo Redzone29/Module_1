@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>type temperature</title>
+</head>
+<body>
+<script>
+    let temp = parseFloat(prompt("Type the temperature: "));
+    if (isNaN(temp)) {
+        do{parseFloat(prompt("Please enter a number: "));
+        }while(!isNaN(temp));
+    }else if (temp < 20 || temp > 100) {
+        do{parseFloat(prompt("The temperature should be greater than 20 degrees: "));
+        }while(temp<20 || temp > 100);
+
+    }else {document.writeln(temp);}
+</script>
+</body>
+</html>
