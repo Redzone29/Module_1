@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Đoán Số</title>
+</head>
+<body>
+    <h1>Game Đoán Số</h1>
+    <p>Hãy thử đoán xem!</p>
+    <button onclick="playGame()">Chơi</button>
+
+    <script>
+        function playGame() {
+            // Chọn số ngẫu nhiên từ 1-100
+            let secretNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 3;
+            
+            // Cho phép người dùng đoán tối đa 3 lần
+            for (let i = 0; i < attempts; i++) {
+                let guess = prompt("Nhập số bạn đoán (từ 1-100):");
+                guess = parseInt(guess);
+                
+                // Kiểm tra input hợp lệ
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    alert("Vui lòng nhập số từ 1 đến 100!");
+                    i--; // Không tính lần đoán này
+                    continue;
+                }
+                
+                // So sánh và hiển thị kết quả
+                if (guess === secretNumber) {
+                    alert("Chúc mừng! Bạn đã đoán đúng số " + secretNumber + "!");
+                    break;
+                } else if (guess < secretNumber) {
+                    if (i < attempts - 1) {
+                        alert("Số bạn đoán BÉ HƠN! Hãy thử lại.");
+                    }
+                } else {
+                    if (i < attempts - 1) {
+                        alert("Số bạn đoán LỚN HƠN! Hãy thử lại.");
+                    }
+                }
+                
+                // Hết lượt đoán
+                if (i === attempts - 1 && guess !== secretNumber) {
+                    alert("Bạn đã thua! Số đúng là " + secretNumber);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
