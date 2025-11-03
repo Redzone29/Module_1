@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculating Factorial</title>
-</head>
-<body>
-    <form >
-        <fieldset>
-            <legend>Calculating Factorial</legend>
-            input n:
-            <input type="number" id="number" name="number">
-            <button type="button" onclick="factorial()">generate</button>
-            <p id="result"></p>
-        </fieldset>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Calculating Factorial</legend>
+        input n:
+        <input type="number" id="number" name="number" />
+        <button type="button" onclick="factorial()">generate</button>
+        <p id="result"></p>
+      </fieldset>
     </form>
     <script>
-       function factorial(){
+      function factorial() {
         //khai báo biến
         let n = parseFloat(document.getElementById("number").value);
         let m = 1;
-        let x, y = 1;
+        let x,
+          y = 1;
         //kiểm tra input
-        if(isNaN(n) && n >2){
-            document.writeln("Please enter a real number that geater than 2")
+        if (isNaN(n) && n > 2) {
+          document.writeln("Please enter a real number that geater than 2");
         }
         //vòng lặp for
-        for(let i=0; i < n ; i++){
-            x = y * m;
-            m = x;
-            y++;
+        for (let i = 0; i < n; i++) {
+          x = y * m;
+          m = x;
+          y++;
         }
         //output
-        document.getElementById("result").innerHTML=("The result is : " + x);
-       }
+        document.getElementById("result").innerHTML = "The result is : " + x;
+      }
     </script>
-</body>
+  </body>
 </html>
