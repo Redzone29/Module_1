@@ -1,11 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <style>
+      .result {
+        white-space: pre;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Vẽ hình bằng vòng lặp for</h1>
+
+    <h2>Bài 3: Tam giác vuông tăng dần</h2>
+    <div class="result" id="pattern1"></div>
+
+    <h2>Tam giác vuông giảm dần</h2>
+    <div class="result" id="pattern2"></div>
+
+    <h2>Tam giác vuông tăng dần (căn lề phải)</h2>
+    <div class="result" id="pattern3"></div>
+
+    <h2>Tam giác vuông giảm dần (căn lề phải)</h2>
+    <div class="result" id="pattern3b"></div>
+
+    <script>
+      function pattern1() {
+        let result = "";
+        for (let i = 1; i <= 5; i++) {
+          for (let j = 1; j <= i; j++) {
+            result += "*";
+          }
+          result += "\n";
+        }
+        document.getElementById("pattern1").textContent = result;
+      }
+      function pattern2() {
+        let result = "";
+        for (let i = 5; i >= 1; i--) {
+          for (let j = 1; j <= i; j++) {
+            result += "*";
+          }
+          result += "\n";
+        }
+        document.getElementById("pattern2").textContent = result;
+      }
+      function pattern3() {
+        let result = "";
+        for (let i = 1; i <= 5; i++) {
+          for (let j = 1; j <= 5 - i; j++) {
+            result += " ";
+          }
+          for (let k = 1; k <= i; k++) {
+            result += "*";
+          }
+          result += "\n";
+        }
+        document.getElementById("pattern3").textContent = result;
+      }
+      function pattern3b() {
+        let result = "";
+        for (let i = 5; i >= 1; i--) {
+          for (let j = 1; j <= 5 - i; j++) {
+            result += " ";
+          }
+          for (let k = 1; k <= i; k++) {
+            result += "*";
+          }
+          result += "\n";
+        }
+        document.getElementById("pattern3b").textContent = result;
+      }
+      pattern1();
+      pattern2();
+      pattern3();
+      pattern3b();
+    </script>
+  </body>
 </html>

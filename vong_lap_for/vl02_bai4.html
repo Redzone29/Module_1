@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .result {
+        white-space: pre;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Bài 4: Hình chữ nhật</h2>
+    <div class="result" id="pattern4"></div>
+    <script>
+      function pattern4() {
+        let result = "";
+        let width = 24;
+        let height = 6;
+
+        for (let i = 1; i <= height; i++) {
+          for (let j = 1; j <= width; j++) {
+            if (i == 1 || i == height || j == 1 || j == width) {
+              result += "*";
+            } else {
+              result += " ";
+            }
+          }
+          result += "\n";
+        }
+        document.getElementById("pattern4").textContent = result;
+      }
+      pattern4();
+    </script>
+  </body>
+</html>
