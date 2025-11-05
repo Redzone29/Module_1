@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array = Array(10);
+      for (let i = 0; i < 10; i++) {
+        array[i] = parseInt(prompt("Type element " + (i + 1) + ":"));
+      }
+      array.sort(function (a, b) {
+        return a - b;
+      });
+      let largenum = [];
+      for (let i = 0; i < 10; i++) {
+        if (array[i] >= 10) {
+          largenum.push(array[i]);
+        }
+      }
+      document.write("The number larger than or equal to 10 are: " + largenum);
+    </script>
+  </body>
+</html>
