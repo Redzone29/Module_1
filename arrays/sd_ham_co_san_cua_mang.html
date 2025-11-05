@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>array</title>
+  </head>
+  <body>
+    <h1 id="arr"></h1>
+    <h2 id="result"></h2>
+
+    <button type="button" onclick="swapcase(str)">swapcase</button>
+    <p id="swapped"></p>
+
+    <script>
+      let arr = ["nguyen", "gia", "ruy", "2k5", "hihi"];
+      document.getElementById("arr").innerHTML = arr.join(" ");
+
+      let arr2 = [1, 2, 3, 4, 5];
+      let result = "";
+      for (let i = 0; i < arr2.length; i++) {
+        if (arr2[i] % 2 === 0) {
+          result += arr2[i] + "-";
+        } else {
+          result += arr2[i] + " ";
+        }
+      }
+      document.getElementById("result").innerHTML = result;
+
+      // BÀI 3
+      let str = ["Nguyen", "Gia", "Ruy", "2k5", "Hihi"];
+
+      function swapcase(arr) {
+        let swappedArr = [];
+
+        for (let word of arr) {
+          let swappedWord = "";
+          for (let char of word) {
+            if (char === char.toUpperCase()) {
+              swappedWord += char.toLowerCase();
+            } else {
+              swappedWord += char.toUpperCase();
+            }
+          }
+          swappedArr.push(swappedWord);
+        }
+
+        document.getElementById("swapped").innerHTML = swappedArr.join(" ");
+      }
+    </script>
+  </body>
+</html>
