@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array = [];
+      for (let i = 0; i < 10; i++) {
+        array[i] = parseInt(prompt("type element " + (i + 1) + ":"));
+      }
+
+      let find = parseInt(prompt("type the number to find:"));
+      let index = -1;
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === find) {
+          index = i;
+        }
+      }
+      if (index !== -1) {
+        document.write("The number " + find + " is found in the array.");
+      } else {
+        document.write("the number " + find + " is not found in the array.");
+      }
+    </script>
+  </body>
+</html>
