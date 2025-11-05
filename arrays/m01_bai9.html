@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array2D = [];
+      let C = [];
+      for (let i = 0; i < 2; i++) {
+        array2D[i] = [];
+        for (let j = 0; j < 10; j++) {
+          array2D[i][j] = parseInt(
+            prompt("type element at position [" + i + "][" + j + "]:")
+          );
+          C.push(array2D[i][j]);
+        }
+      }
+      document.write("The copied array is: " + C);
+      document.write("The original 2D array is: <br>");
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 10; j++) {
+          document.write(array2D[i][j] + " ");
+        }
+        document.write("<br>");
+      }
+    </script>
+  </body>
+</html>
