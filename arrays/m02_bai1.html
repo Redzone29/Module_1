@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array2d = [];
+      for (let i = 0; i < 5; i++) {
+        array2d[i] = [];
+        for (let j = 0; j < 4; j++) {
+          array2d[i][j] = parseInt(
+            prompt("Type element at position [" + i + "][" + j + "]:")
+          );
+        }
+      }
+      for (let i = 0; i < 5; i++) {
+        document.write("Row" + i + ": ");
+        for (let j = 0; j < 4; j++) {
+          document.write(array2d[i][j] + " ");
+        }
+        document.write("<br>");
+      }
+    </script>
+  </body>
+</html>
