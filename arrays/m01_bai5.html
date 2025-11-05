@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array = [];
+      let number = parseInt(prompt("Type the number of elements:"));
+      for (let i = 0; i < number; i++) {
+        array[i] = parseInt(prompt("Type element " + (i + 1) + ":"));
+      }
+      let sortedArray = array.sort(function (a, b) {
+        return a - b;
+      });
+      document.write("The sorted array in ascending order is: " + sortedArray);
+    </script>
+  </body>
+</html>
