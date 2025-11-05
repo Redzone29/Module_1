@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array = [];
+      sum = 0;
+      max = 0;
+      number = parseInt(prompt("type the number of elements:"));
+      for (let i = 0; i < number; i++) {
+        array[i] = parseInt(prompt("type element " + (i + 1) + ":"));
+        sum += array[i];
+        if (max < array[i]) {
+          max = array[i];
+        }
+      }
+      let avg = sum / number;
+      document.write("The average is: " + avg + "<br>");
+      document.write("The largest number is: " + max);
+    </script>
+  </body>
+</html>
