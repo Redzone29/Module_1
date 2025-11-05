@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array = [];
+      for (i = 0; i < 10; i++) {
+        array[i] = parseInt(prompt("type element " + (i + 1) + ":"));
+      }
+
+      let find = parseInt(prompt("type the number to remove:"));
+      for (i = 0; i < array.length; i++) {
+        if (array[i] === find) {
+          array.splice(i, 1);
+          i--;
+          array.push(0);
+        }
+      }
+      document.write("The new array is: " + array);
+    </script>
+  </body>
+</html>
