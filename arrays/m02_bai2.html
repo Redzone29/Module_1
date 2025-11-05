@@ -9,13 +9,22 @@
     <script>
       let array = [10];
       let max = 0;
+      let j = 0;
       for (let i = 0; i < 10; i++) {
         array[i] = parseInt(prompt("type element" + (i + 1) + ":"));
         if (max < array[i]) {
           max = array[i];
+          j = i;
         }
       }
-      document.write("The largest number is: " + max);
+      document.write(
+        "The largest number is: " +
+          max +
+          " at position " +
+          "array[" +
+          (j + 1) +
+          "]"
+      );
     </script>
   </body>
 </html>
