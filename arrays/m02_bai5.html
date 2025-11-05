@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str1 = prompt("Type a string:");
+      let str2 = prompt("Type another string:");
+      let array1 = str1.split("");
+      let array2 = str2.split("");
+      count = 0;
+      for (let i = 0; i < array1.length; i++) {
+        if (array1[i] === array2[i]) {
+          count++;
+        }
+      }
+      if (count === array1.length) {
+        document.write("These 2 strings are the same");
+      } else {
+        document.write("These 2 strings are different");
+      }
+    </script>
+  </body>
+</html>
