@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dictionary</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Dictionary</legend>
+        Type the word you want to look up:<br />
+        <input type="text" id="eng" />
+        <button type="button" onclick="translateWord()">Translate</button>
+        <p id="result"></p>
+      </fieldset>
+    </form>
+    <script>
+      function translateWord() {
+        let dictionary = {
+          hello: "xin chào",
+          how: "thế nào",
+          book: "quyển vở",
+          computer: "máy tính",
+        };
+        let engWord = document.getElementById("eng").value;
+        let viWord = dictionary[engWord];
+        let resultElement = document.getElementById("result");
+        if (viWord !== undefined) {
+          resultElement.innerHTML = viWord;
+        } else {
+          resultElement.innerHTML = "Not found";
+        }
+      }
+    </script>
+  </body>
+</html>
