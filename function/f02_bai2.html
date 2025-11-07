@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Type radius:
+    <input type="number" id="number" />
+    <button type="button" onclick="circlePerimeter()">
+      Calculate Circle Perimeter
+    </button>
+    <button type="button" onclick="circleArea()">Calculate Circle Area</button>
+    <p id="result"></p>
+    <script>
+      function circlePerimeter() {
+        let r = parseFloat(document.getElementById("number").value);
+        let perimeter = 2 * Math.PI * r;
+        document.getElementById("result").innerHTML =
+          "Circle Perimeter: " + perimeter.toFixed(2);
+      }
+      function circleArea() {
+        let r = parseFloat(document.getElementById("number").value);
+        let area = Math.PI * r * r;
+        result = document.getElementById("result").innerHTML =
+          "Circle Area: " + area.toFixed(2);
+      }
+    </script>
+  </body>
+</html>
