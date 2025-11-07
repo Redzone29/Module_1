@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    Type Star Name:
+    <input type="text" id="starName" />
+    <button type="button" onclick="find()">Find</button>
+    <script>
+      function find() {
+        name = document.getElementById("starName").value;
+        let star = [
+          "Polaris",
+          "Aldebaran",
+          "Deneb",
+          "Vega",
+          "Altair",
+          "Dubhe",
+          "Regulus",
+        ];
+        let found = [
+          "Ursa Minor",
+          "Taurus",
+          "Cygnus",
+          "Lyra",
+          "Aquila",
+          "Ursa Major",
+          "Leo",
+        ];
+        for (let i = 0; i < star.length; i++) {
+          if (name === star[i]) {
+            alert(
+              "The star " + name + " belongs to the constellation " + found[i]
+            );
+            break;
+          } else {
+            alert("Not found");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
