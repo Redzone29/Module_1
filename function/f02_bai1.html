@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="number" id="number" />
+    <button type="button" onclick="calculate()">calculate</button>
+    <p id="result"></p>
+    <script>
+      function calculate() {
+        let n = parseInt(document.getElementById("number").value);
+        let square = n * n;
+        result = document.getElementById("result").innerHTML =
+          "Square: " + square;
+      }
+    </script>
+  </body>
+</html>
