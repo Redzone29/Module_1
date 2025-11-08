@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [];
+      arr = prompt("Enter characters and digits separated by commas: ").split(
+        ""
+      );
+      function findCharDigit(array) {
+        let count = -1;
+        let n = prompt("Enter the character digit to count: ");
+        for (let i = 0; i < array.length; i++) {
+          if (array[i] === n) {
+            count++;
+          }
+        }
+        if (count === -1) {
+          document.write("Character digit " + n + " not found in the array.");
+        } else {
+          document.write(
+            "Character digit " +
+              n +
+              " found " +
+              (count + 1) +
+              " times in the array."
+          );
+        }
+      }
+      findCharDigit(arr);
+    </script>
+  </body>
+</html>
