@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button type="button" onclick="checkNum()">
+      click to begin checking number
+    </button>
+    <script>
+      function checkNum() {
+        let number = prompt("Enter a number:");
+        let check = number.split("");
+        let flag = true;
+        for (let i = 0; i < check.length; i++) {
+          if (check[i] < "0" || check[i] > "9") {
+            flag = false;
+            break;
+          }
+        }
+        alert("Is the input a number? " + flag + " " + check);
+      }
+    </script>
+  </body>
+</html>
