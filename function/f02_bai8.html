@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [];
+      for (let i = 0; i < 5; i++) {
+        let element = parseFloat(prompt("Enter element " + (i + 1) + ": "));
+        arr.push(element);
+      }
+      let reversedArr = [];
+      function reverseArray(originalArr) {
+        for (let i = originalArr.length - 1; i >= 0; i--) {
+          reversedArr.push(originalArr[i]);
+        }
+      }
+      reverseArray(arr);
+      document.write("Reversed array: " + reversedArr.join(", "));
+    </script>
+  </body>
+</html>
