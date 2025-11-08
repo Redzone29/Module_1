@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [];
+      for (let i = 0; i < 2; i++) {
+        let element = parseFloat(prompt("Enter element " + (i + 1) + ": "));
+        arr.push(element);
+      }
+      function swap(arr, i, j) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+      swap(arr, 0, 1);
+      document.write("Array after swapping: " + arr.join(", "));
+    </script>
+  </body>
+</html>
