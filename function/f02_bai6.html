@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Find the positive number</legend>
+        <button type="button" onclick="findPositive()">
+          Click to type and find the positive number
+        </button>
+      </fieldset>
+    </form>
+    <script>
+      function findPositive() {
+        let number = prompt("Enter number of elements:");
+        let positive = [];
+        if (isNaN(number) || number <= 0) {
+          alert("Invalid input! Please enter a positive integer.");
+          return;
+        }
+        for (let i = 0; i < number; i++) {
+          let element = parseFloat(prompt("Enter element " + (i + 1) + ":"));
+          if (isNaN(element)) {
+            document.write("Please enter a valid number.<br>");
+          } else if (element > 0) {
+            positive.push(element);
+          }
+        }
+        document.write("Positive numbers are: " + positive.join(", "));
+      }
+    </script>
+  </body>
+</html>
