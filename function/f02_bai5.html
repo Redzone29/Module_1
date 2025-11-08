@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>find the smallest number</legend>
+        Input first number: <br />
+        <input type="number" id="num1" /><br />
+        Input second number: <br />
+        <input type="number" id="num2" /><br />
+        Input third number: <br />
+        <input type="number" id="num3" /><br /><br />
+        <button type="button" onclick="findSmallest()">Find Smallest</button
+        ><br /><br />
+        <p id="result"></p>
+        <script>
+          function findSmallest() {
+            let n1 = parseFloat(document.getElementById("num1").value);
+            let n2 = parseFloat(document.getElementById("num2").value);
+            let n3 = parseFloat(document.getElementById("num3").value);
+            let smallest = n1;
+            if (n2 < smallest) {
+              smallest = n2;
+            } else if (n3 < smallest) {
+              smallest = n3;
+            }
+            document.getElementById("result").innerHTML =
+              "Smallest number is: " + smallest;
+          }
+        </script>
+      </fieldset>
+    </form>
+  </body>
+</html>
