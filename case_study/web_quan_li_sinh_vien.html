@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sinh viên</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        text-align: center;
+        color: #667eea;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        list-style: none;
+        margin-bottom: 30px;
+      }
+
+      .menu li {
+        display: flex;
+      }
+
+      button {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      button:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      button:hover:before {
+        left: 100%;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      #output {
+        margin-top: 30px;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333;
+      }
+
+      tr:hover {
+        background-color: #f5f5ff;
+        transition: background-color 0.3s ease;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      .empty-message {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 18px;
+        font-style: italic;
+      }
+
+      .exit-message {
+        text-align: center;
+        color: #667eea;
+        font-size: 2em;
+        padding: 100px 20px;
+        animation: fadeIn 0.8s ease-in;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+        }
+
+        h2 {
+          font-size: 1.8em;
+        }
+
+        .menu {
+          grid-template-columns: 1fr;
+        }
+
+        button {
+          padding: 12px 15px;
+          font-size: 14px;
+        }
+
+        table {
+          font-size: 14px;
+        }
+
+        th,
+        td {
+          padding: 10px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>📚 HỆ THỐNG QUẢN LÝ SINH VIÊN</h2>
+
+      <ul class="menu">
+        <li><button onclick="searchStudent()">🔍 Tra cứu sinh viên</button></li>
+        <li><button onclick="addStudent()">➕ Thêm sinh viên</button></li>
+        <li><button onclick="deleteStudent()">🗑️ Xóa sinh viên</button></li>
+        <li><button onclick="showStudents()">👥 Xem danh sách</button></li>
+        <li><button onclick="sortByScore()">📊 Sắp xếp theo điểm</button></li>
+        <li><button onclick="checkScore()">✅ Kiểm tra điểm</button></li>
+        <li><button onclick="checkRank()">🎓 Kiểm tra học lực</button></li>
+        <li><button onclick="exitProgram()">🚪 Thoát chương trình</button></li>
+      </ul>
+
+      <div id="output"></div>
+    </div>
+
+    <script>
+      // Định nghĩa đối tượng Sinh viên
+      function Student(id, name, age, className, score) {
+        this.id = id;
+        this.name = name;
+        this.age = parseInt(age);
+        this.className = className;
+        this.score = parseFloat(score);
+
+        this.rank = function () {
+          if (this.score >= 8) return "Giỏi";
+          if (this.score >= 6.5) return "Khá";
+          if (this.score >= 5) return "Trung bình";
+          return "Yếu";
+        };
+      }
+
+      // Danh sách sinh viên
+      var students = [];
+
+      // ============ CHỨC NĂNG ============
+
+      // 1. Thêm sinh viên
+      function addStudent() {
+        var id = prompt("Nhập mã sinh viên:");
+        if (!id) return;
+
+        var name = prompt("Nhập tên sinh viên:");
+        if (!name) return;
+
+        var age = prompt("Nhập tuổi:");
+        if (!age) return;
+
+        var className = prompt("Nhập lớp:");
+        if (!className) return;
+
+        var score = prompt("Nhập điểm:");
+        if (!score) return;
+
+        // Kiểm tra trùng mã
+        for (var i = 0; i < students.length; i++) {
+          if (students[i].id === id) {
+            alert("❌ Mã sinh viên đã tồn tại!");
+            return;
+          }
+        }
+
+        var sv = new Student(id, name, age, className, score);
+        students.push(sv);
+        alert("✅ Đã thêm sinh viên thành công!");
+      }
+
+      // 2. Hiển thị danh sách
+      function showStudents() {
+        if (students.length === 0) {
+          document.getElementById("output").innerHTML =
+            "<div class='empty-message'>📋 Chưa có sinh viên nào trong danh sách</div>";
+          return;
+        }
+
+        var html =
+          "<table><tr><th>Mã SV</th><th>Họ tên</th><th>Tuổi</th><th>Lớp</th><th>Điểm</th><th>Học lực</th></tr>";
+
+        for (var i = 0; i < students.length; i++) {
+          html += "<tr>";
+          html += "<td>" + students[i].id + "</td>";
+          html += "<td>" + students[i].name + "</td>";
+          html += "<td>" + students[i].age + "</td>";
+          html += "<td>" + students[i].className + "</td>";
+          html += "<td>" + students[i].score + "</td>";
+          html += "<td>" + students[i].rank() + "</td>";
+          html += "</tr>";
+        }
+
+        html += "</table>";
+        document.getElementById("output").innerHTML = html;
+      }
+
+      // 3. Tra cứu sinh viên
+      function searchStudent() {
+        var id = prompt("🔍 Nhập mã sinh viên cần tìm:");
+        if (!id) return;
+
+        for (var i = 0; i < students.length; i++) {
+          if (students[i].id === id) {
+            alert(
+              "📝 THÔNG TIN SINH VIÊN\n\n" +
+                "Tên: " +
+                students[i].name +
+                "\nTuổi: " +
+                students[i].age +
+                "\nLớp: " +
+                students[i].className +
+                "\nĐiểm: " +
+                students[i].score +
+                "\nHọc lực: " +
+                students[i].rank()
+            );
+            return;
+          }
+        }
+        alert("❌ Không tìm thấy sinh viên!");
+      }
+
+      // 4. Xóa sinh viên
+      function deleteStudent() {
+        var id = prompt("🗑️ Nhập mã sinh viên cần xóa:");
+        if (!id) return;
+
+        for (var i = 0; i < students.length; i++) {
+          if (students[i].id === id) {
+            var confirm = window.confirm(
+              "Bạn có chắc chắn muốn xóa sinh viên " + students[i].name + "?"
+            );
+            if (confirm) {
+              students.splice(i, 1);
+              alert("✅ Đã xóa sinh viên thành công!");
+            }
+            return;
+          }
+        }
+        alert("❌ Không tìm thấy sinh viên!");
+      }
+
+      // 5. Sắp xếp theo điểm
+      function sortByScore() {
+        if (students.length === 0) {
+          alert("📋 Chưa có sinh viên nào để sắp xếp!");
+          return;
+        }
+
+        for (var i = 0; i < students.length - 1; i++) {
+          for (var j = i + 1; j < students.length; j++) {
+            if (students[i].score < students[j].score) {
+              var temp = students[i];
+              students[i] = students[j];
+              students[j] = temp;
+            }
+          }
+        }
+        showStudents();
+      }
+
+      // 6. Kiểm tra điểm
+      function checkScore() {
+        var id = prompt("✅ Nhập mã sinh viên:");
+        if (!id) return;
+
+        for (var i = 0; i < students.length; i++) {
+          if (students[i].id === id) {
+            alert(
+              "📊 Điểm của sinh viên " +
+                students[i].name +
+                " là: " +
+                students[i].score
+            );
+            return;
+          }
+        }
+        alert("❌ Không tìm thấy sinh viên!");
+      }
+
+      // 7. Kiểm tra học lực
+      function checkRank() {
+        var id = prompt("🎓 Nhập mã sinh viên:");
+        if (!id) return;
+
+        for (var i = 0; i < students.length; i++) {
+          if (students[i].id === id) {
+            alert(
+              "🎓 Học lực của sinh viên " +
+                students[i].name +
+                " là: " +
+                students[i].rank()
+            );
+            return;
+          }
+        }
+        alert("❌ Không tìm thấy sinh viên!");
+      }
+
+      // 8. Thoát
+      function exitProgram() {
+        var confirm = window.confirm(
+          "Bạn có chắc chắn muốn thoát chương trình?"
+        );
+        if (confirm) {
+          document.body.innerHTML =
+            "<div class='exit-message'>👋 Chương trình đã kết thúc<br>Cảm ơn bạn đã sử dụng!</div>";
+        }
+      }
+    </script>
+  </body>
+</html>
