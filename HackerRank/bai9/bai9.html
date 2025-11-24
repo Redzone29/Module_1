@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function timeConversion(s) {
+        // Lấy phần giờ, phút, giây
+        let hour = parseInt(s.slice(0, 2));
+        const minutesSeconds = s.slice(2, 8); // ":MM:SS"
+        const period = s.slice(8); // "AM" hoặc "PM"
+
+        if (period === "AM") {
+          if (hour === 12) hour = 0; // 12AM → 00
+        } else {
+          // PM
+          if (hour !== 12) hour += 12; // 1PM → 13, 11PM → 23
+        }
+
+        // Đảm bảo giờ có 2 chữ số
+        const hourStr = hour.toString().padStart(2, "0");
+
+        return hourStr + minutesSeconds;
+      }
+    </script>
+  </body>
+</html>
