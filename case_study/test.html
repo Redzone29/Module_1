@@ -1,13 +1,689 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Hệ Thống Quản Lý Sinh Viên Pro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #6a11cb;
+        --secondary: #2575fc;
+        --success: #00b09b;
+        --danger: #ff416c;
+        --text: #333;
+        --white: #fff;
+        --glass: rgba(255, 255, 255, 0.9);
+        --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        min-height: 100vh;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      /* --- Container chính --- */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        margin-top: 20px;
+        min-height: 80vh;
+      }
+
+      /* --- Header --- */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      h2 {
+        font-size: 24px;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      /* --- Toolbar (Tìm kiếm + Nút thêm) --- */
+      .toolbar {
+        display: flex;
+        gap: 15px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .search-box {
+        flex: 1;
+        position: relative;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 12px 15px 12px 45px;
+        border: 2px solid #eee;
+        border-radius: 12px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .search-box input:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 4px rgba(37, 117, 252, 0.1);
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      .btn-primary {
+        padding: 12px 25px;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: var(--white);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.2s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+
+      /* --- Bảng dữ liệu --- */
+      .table-responsive {
+        overflow-x: auto;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: left;
+        color: #666;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: var(--text);
+        vertical-align: middle;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover {
+        background-color: #fbfbfb;
+      }
+
+      .rank-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      /* --- Các nút hành động trong bảng --- */
+      .action-btn {
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-right: 5px;
+        transition: 0.2s;
+      }
+
+      .btn-edit {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+      .btn-delete {
+        background: #ffebee;
+        color: #c62828;
+      }
+      .action-btn:hover {
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+
+      /* --- MODAL (Cửa sổ nhập liệu) --- */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 1000;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        transform: translateY(-20px);
+        transition: 0.3s;
+      }
+
+      .modal-overlay.active .modal {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #666;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        outline: none;
+      }
+      .form-group input:focus {
+        border-color: var(--primary);
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn-secondary {
+        background: #eee;
+        color: #333;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* --- TOAST NOTIFICATION (Thông báo) --- */
+      #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 2000;
+      }
+
+      .toast {
+        padding: 15px 25px;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.3s ease;
+      }
+
+      .toast.success {
+        background: var(--success);
+      }
+      .toast.error {
+        background: var(--danger);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .toolbar {
+          flex-direction: column;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <header>
+        <h2>📚 Quản Lý Sinh Viên</h2>
+        <div class="stats" style="color: #666">
+          Tổng số: <strong id="total-students">0</strong> sinh viên
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <button
+          class="btn-primary"
+          onclick="resetData()"
+          style="background: linear-gradient(to right, #ff416c, #ff4b1f)"
+        >
+          <i class="fas fa-trash-restore"></i> Reset dữ liệu
+        </button>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Tìm kiếm theo tên hoặc mã SV..."
+            onkeyup="searchStudent()"
+          />
+        </div>
+        <button class="btn-primary" onclick="openModal()">
+          <i class="fas fa-plus"></i> Thêm mới
+        </button>
+        <button
+          class="btn-primary"
+          onclick="sortStudents()"
+          style="background: linear-gradient(to right, #11998e, #38ef7d)"
+        >
+          <i class="fas fa-sort-amount-down"></i> Sắp xếp điểm
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table id="student-table">
+          <thead>
+            <tr>
+              <th>Mã SV</th>
+              <th>Họ Tên</th>
+              <th>Tuổi</th>
+              <th>Lớp</th>
+              <th>Điểm</th>
+              <th>Học Lực</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <div
+        id="empty-state"
+        style="text-align: center; padding: 40px; display: none"
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/7486/7486754.png"
+          width="80"
+          style="opacity: 0.5; margin-bottom: 10px"
+        />
+        <p style="color: #999">Chưa có dữ liệu sinh viên</p>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modal-title">Thêm Sinh Viên Mới</h3>
+          <button
+            onclick="closeModal()"
+            style="
+              background: none;
+              border: none;
+              font-size: 20px;
+              cursor: pointer;
+            "
+          >
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="student-index" />
+          <div class="form-group">
+            <label>Mã Sinh Viên (*)</label>
+            <input type="text" id="inp-id" placeholder="VD: SV001" />
+          </div>
+          <div class="form-group">
+            <label>Họ và Tên (*)</label>
+            <input type="text" id="inp-name" placeholder="VD: Nguyễn Văn A" />
+          </div>
+          <div class="form-group">
+            <div style="display: flex; gap: 15px">
+              <div style="flex: 1">
+                <label>Tuổi</label>
+                <input type="number" id="inp-age" placeholder="18" />
+              </div>
+              <div style="flex: 1">
+                <label>Điểm (0-10)</label>
+                <input
+                  type="number"
+                  id="inp-score"
+                  placeholder="0.0"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Lớp</label>
+            <input type="text" id="inp-class" placeholder="VD: CNTT K15" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal()">Hủy</button>
+          <button class="btn-primary" onclick="saveStudent()">Lưu lại</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-container"></div>
+
     <script>
-      window.confirm("Test");
+      // 1. KHỞI TẠO DỮ LIỆU
+      // Lấy dữ liệu từ LocalStorage nếu có, nếu không thì dùng mảng rỗng
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+
+      // Chạy hàm hiển thị lần đầu
+      renderTable(students);
+
+      // 2. CÁC HÀM XỬ LÝ CHÍNH
+
+      // Hàm hiển thị danh sách ra bảng
+      function renderTable(data) {
+        const tbody = document.getElementById("table-body");
+        const emptyState = document.getElementById("empty-state");
+        const totalSpan = document.getElementById("total-students");
+
+        tbody.innerHTML = ""; // Xóa dữ liệu cũ
+        totalSpan.innerText = data.length;
+
+        if (data.length === 0) {
+          emptyState.style.display = "block";
+          return;
+        } else {
+          emptyState.style.display = "none";
+        }
+
+        data.forEach((sv, index) => {
+          let rank = getRank(sv.score);
+          let rankColor = getRankColor(rank);
+
+          let row = `
+                    <tr>
+                        <td><strong>${sv.id}</strong></td>
+                        <td>${sv.name}</td>
+                        <td>${sv.age}</td>
+                        <td>${sv.className}</td>
+                        <td style="font-weight: bold; color: var(--primary);">${sv.score}</td>
+                        <td><span class="rank-badge" style="background: ${rankColor}20; color: ${rankColor}">${rank}</span></td>
+                        <td>
+                            <button class="action-btn btn-edit" onclick="editStudent('${sv.id}')"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn btn-delete" onclick="deleteStudent('${sv.id}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+          tbody.innerHTML += row;
+        });
+      }
+
+      // Hàm tính học lực
+      function getRank(score) {
+        if (score >= 8) return "Giỏi";
+        if (score >= 6.5) return "Khá";
+        if (score >= 5) return "Trung bình";
+        return "Yếu";
+      }
+
+      // Hàm lấy màu sắc theo học lực
+      function getRankColor(rank) {
+        if (rank === "Giỏi") return "#00b09b"; // Xanh lá
+        if (rank === "Khá") return "#2575fc"; // Xanh dương
+        if (rank === "Trung bình") return "#f1c40f"; // Vàng
+        return "#ff416c"; // Đỏ
+      }
+
+      // 3. XỬ LÝ MODAL & FORM
+
+      function openModal(isEdit = false) {
+        document.getElementById("modal-overlay").classList.add("active");
+        if (!isEdit) {
+          document.getElementById("modal-title").innerText =
+            "Thêm Sinh Viên Mới";
+          clearForm();
+          document.getElementById("inp-id").disabled = false; // Cho phép nhập ID
+        } else {
+          document.getElementById("modal-title").innerText =
+            "Cập Nhật Thông Tin";
+          document.getElementById("inp-id").disabled = true; // Cấm sửa ID
+        }
+      }
+
+      function closeModal() {
+        document.getElementById("modal-overlay").classList.remove("active");
+      }
+
+      function clearForm() {
+        document.getElementById("inp-id").value = "";
+        document.getElementById("inp-name").value = "";
+        document.getElementById("inp-age").value = "";
+        document.getElementById("inp-score").value = "";
+        document.getElementById("inp-class").value = "";
+        document.getElementById("student-index").value = "";
+      }
+
+      // 4. CHỨC NĂNG THÊM / SỬA (LƯU)
+      function saveStudent() {
+        // Lấy dữ liệu từ form
+        let id = document.getElementById("inp-id").value.trim();
+        let name = document.getElementById("inp-name").value.trim();
+        let age = document.getElementById("inp-age").value;
+        let score = document.getElementById("inp-score").value;
+        let className = document.getElementById("inp-class").value.trim();
+
+        // Validate dữ liệu
+        if (!id || !name || !score) {
+          showToast("Vui lòng điền đầy đủ thông tin bắt buộc!", "error");
+          return;
+        }
+        if (score < 0 || score > 10) {
+          showToast("Điểm phải từ 0 đến 10!", "error");
+          return;
+        }
+
+        // Kiểm tra xem là Thêm mới hay Sửa
+        let isEdit = document.getElementById("inp-id").disabled;
+
+        if (!isEdit) {
+          // --- THÊM MỚI ---
+          // Kiểm tra trùng ID
+          if (students.some((s) => s.id === id)) {
+            showToast("Mã sinh viên này đã tồn tại!", "error");
+            return;
+          }
+
+          let newSv = { id, name, age, score, className };
+          students.push(newSv);
+          showToast("Thêm sinh viên thành công!", "success");
+        } else {
+          // --- SỬA ---
+          let index = students.findIndex((s) => s.id === id);
+          if (index !== -1) {
+            students[index] = { id, name, age, score, className };
+            showToast("Cập nhật thành công!", "success");
+          }
+        }
+
+        // Lưu vào LocalStorage và vẽ lại bảng
+        saveToLocalStorage();
+        renderTable(students);
+        closeModal();
+      }
+
+      // 5. CHỨC NĂNG SỬA (Mở form và điền dữ liệu cũ)
+      function editStudent(id) {
+        let sv = students.find((s) => s.id === id);
+        if (sv) {
+          document.getElementById("inp-id").value = sv.id;
+          document.getElementById("inp-name").value = sv.name;
+          document.getElementById("inp-age").value = sv.age;
+          document.getElementById("inp-score").value = sv.score;
+          document.getElementById("inp-class").value = sv.className;
+          openModal(true); // true = chế độ sửa
+        }
+      }
+
+      // 6. CHỨC NĂNG XÓA
+      function deleteStudent(id) {
+        if (confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
+          students = students.filter((s) => s.id !== id);
+          saveToLocalStorage();
+          renderTable(students);
+          showToast("Đã xóa sinh viên!", "success");
+        }
+      }
+
+      // 7. TÌM KIẾM (Real-time)
+      function searchStudent() {
+        let keyword = document
+          .getElementById("search-input")
+          .value.toLowerCase();
+        let filteredStudents = students.filter(
+          (s) =>
+            s.name.toLowerCase().includes(keyword) ||
+            s.id.toLowerCase().includes(keyword)
+        );
+        renderTable(filteredStudents);
+      }
+
+      // 8. SẮP XẾP
+      function sortStudents() {
+        students.sort((a, b) => b.score - a.score);
+        saveToLocalStorage(); // Lưu lại trật tự mới
+        renderTable(students);
+        showToast("Đã sắp xếp danh sách theo điểm giảm dần!", "success");
+      }
+
+      // 9. TIỆN ÍCH: LƯU TRỮ & THÔNG BÁO
+      function saveToLocalStorage() {
+        localStorage.setItem("students", JSON.stringify(students));
+      }
+
+      function showToast(message, type) {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+                <i class="${
+                  type === "success"
+                    ? "fas fa-check-circle"
+                    : "fas fa-exclamation-circle"
+                }"></i>
+                <span>${message}</span>
+            `;
+        container.appendChild(toast);
+
+        // Tự động xóa sau 3 giây
+        setTimeout(() => {
+          toast.style.animation = "slideIn 0.3s reverse forwards";
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+      // --- 1. HÀM BẢO MẬT (Chống XSS) ---
+      // Hàm này biến đổi các ký tự nguy hiểm thành ký tự an toàn
+      function escapeHtml(text) {
+        if (!text) return text;
+        return text
+          .toString()
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // --- 2. CHỨC NĂNG RESET DỮ LIỆU ---
+      function resetData() {
+        if (students.length === 0) {
+          showToast("Dữ liệu đang trống!", "error");
+          return;
+        }
+
+        // Hỏi xác nhận kỹ lưỡng
+        if (
+          confirm(
+            "CẢNH BÁO: Hành động này sẽ xóa toàn bộ dữ liệu sinh viên và không thể khôi phục.\n\nBạn có chắc chắn muốn tiếp tục?"
+          )
+        ) {
+          // Xóa khỏi bộ nhớ trình duyệt
+          localStorage.removeItem("students");
+          // Đưa mảng về rỗng
+          students = [];
+          // Vẽ lại bảng
+          renderTable(students);
+          showToast("Đã xóa sạch dữ liệu hệ thống!", "success");
+        }
+      }
     </script>
   </body>
 </html>
